@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISO 9001 — Esquema de Decisión</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0e0e0e;
+    --surface: #161616;
+    --border: #2a2a2a;
+    --accent: #c8a96e;
+    --accent2: #6e9fc8;
+    --accent3: #6ec8a3;
+    --text: #e8e4dc;
+    --muted: #666;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    padding: 40px 20px 60px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 60px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--accent);
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+
+  header p {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 8px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  /* ── ESTRUCTURA ISO ─────────────────── */
+  .iso-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    max-width: 1100px;
+    margin: 0 auto 80px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .clause {
+    background: var(--surface);
+    padding: 24px 20px;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .clause::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .clause:hover { background: #1c1c1c; }
+  .clause:hover::before { opacity: 1; }
+
+  .clause-num {
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .clause-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .clause-desc {
+    font-size: 0.7rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .intro-badge {
+    background: #1a1a1a;
+    border: 1px dashed var(--border);
+  }
+
+  /* ── SECCIÓN DECISIÓN ───────────────── */
+  .decision-section {
+    max-width: 820px;
+    margin: 0 auto;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+    align-items: start;
+    position: relative;
+  }
+
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 23px;
+    top: 48px;
+    width: 2px;
+    height: calc(100% - 8px);
+    background: linear-gradient(to bottom, var(--accent2), transparent);
+  }
+
+  .step-num {
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--accent2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: var(--accent2);
+    flex-shrink: 0;
+    background: var(--surface);
+    z-index: 1;
+  }
+
+  .step-body {
+    padding: 12px 0 40px;
+  }
+
+  .step-clause {
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .step-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .step-desc {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  /* ── BOTTOM RULE ──────────────────── */
+  .bottom-rule {
+    max-width: 820px;
+    margin: 60px auto 0;
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    text-align: center;
+    animation: fadeUp 0.8s 0.6s ease both;
+  }
+
+  .bottom-rule p {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--accent3);
+    line-height: 1.6;
+  }
+
+  .bottom-rule span {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: var(--muted);
+    margin-top: 12px;
+    text-transform: uppercase;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ISO 9001</h1>
+  <p>Sistema de Gestión de Calidad — Estructura & Decisión</p>
+</header>
+
+<!-- CLÁUSULAS -->
+<div class="iso-grid">
+
+  <div class="clause intro-badge">
+    <div class="clause-num">Cláusulas 1–3</div>
+    <div class="clause-title">Introducción</div>
+    <div class="clause-desc">Objeto y campo de aplicación, referencias normativas y términos. Base conceptual del sistema.</div>
+  </div>
+
+  <div class="clause">
+    <div class="clause-num">Cláusula 4</div>
+    <div class="clause-title">Contexto de la organización</div>
+    <div class="clause-desc">Entender la empresa, partes interesadas, factores internos/externos y alcance del SGC.</div>
+  </div>
+
+  <div class="clause">
+    <div class="clause-num">Cláusula 5</div>
+    <div class="clause-title">Liderazgo</div>
+    <div class="clause-desc">Compromiso de la alta dirección, política de calidad y roles y responsabilidades definidos.</div>
+  </div>
+
+  <div class="clause">
+    <div class="clause-num">Cláusula 6</div>
+    <div class="clause-title">Planificación</div>
+    <div class="clause-desc">Gestión de riesgos y oportunidades, objetivos de calidad y planificación de cambios.</div>
+  </div>
+
+  <div class="clause">
+    <div class="clause-num">Cláusula 7</div>
+    <div class="clause-title">Apoyo</div>
+    <div class="clause-desc">Recursos, competencias, toma de conciencia, comunicación y gestión documental.</div>
+  </div>
+
+  <div class="clause">
+    <div class="clause-num">Cláusula 8</div>
+    <div class="clause-title">Operación</div>
+    <div class="clause-desc">Planificación y control de procesos, diseño, compras, producción y control de salidas no conformes.</div>
+  </div>
+
+  <div class="clause">
+    <div class="clause-num">Cláusula 9</div>
+    <div class="clause-title">Evaluación del desempeño</div>
+    <div class="clause-desc">Seguimiento, medición, auditorías internas y revisión por la dirección.</div>
+  </div>
+
+  <div class="clause">
+    <div class="clause-num">Cláusula 10</div>
+    <div class="clause-title">Mejora</div>
+    <div class="clause-desc">No conformidades, acciones correctivas y mejora continua del sistema.</div>
+  </div>
+
+</div>
+
+<!-- DECISIÓN -->
+<div class="decision-section">
+  <div class="section-label">Cómo tomar una decisión según ISO 9001</div>
+
+  <div class="flow">
+
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <div class="step-clause">Cláusula 4</div>
+        <div class="step-title">Definir el problema en contexto</div>
+        <div class="step-desc">Identifica qué proceso o requisito de calidad está involucrado. Entiende el impacto sobre las partes interesadas.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <div class="step-clause">Cláusula 9</div>
+        <div class="step-title">Recopilar evidencia objetiva</div>
+        <div class="step-desc">Métricas, indicadores de proceso, resultados de auditorías, retroalimentación del cliente. La decisión se fundamenta en datos, no en intuición.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <div class="step-clause">Cláusula 6</div>
+        <div class="step-title">Evaluar riesgos y oportunidades</div>
+        <div class="step-desc">Analiza cada alternativa: ¿qué puede fallar? ¿qué recursos se requieren? ¿qué oportunidad representa?</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <div class="step-clause">Cláusula 5</div>
+        <div class="step-title">Decidir y documentar</div>
+        <div class="step-desc">La decisión se toma en el nivel de liderazgo correspondiente. Se documenta el criterio utilizado y la autorización.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-body">
+        <div class="step-clause">Cláusula 8</div>
+        <div class="step-title">Implementar de forma controlada</div>
+        <div class="step-desc">El cambio se ejecuta asegurando que los involucrados estén informados, capacitados y con recursos asignados.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">06</div>
+      <div class="step-body">
+        <div class="step-clause">Cláusula 9 — 10</div>
+        <div class="step-title">Seguimiento y mejora</div>
+        <div class="step-desc">Se mide el resultado. Si algo falla, se activa una acción correctiva formal. El ciclo se cierra y se aprende.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="bottom-rule">
+  <p>Evidencia → Análisis de riesgo → Decisión documentada<br>→ Implementación controlada → Seguimiento → Mejora</p>
+  <span>Principio ISO 9001 · Toma de decisiones basada en evidencia</span>
+</div>
+
+</body>
+</html>
